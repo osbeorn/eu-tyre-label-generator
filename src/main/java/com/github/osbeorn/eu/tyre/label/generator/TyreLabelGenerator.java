@@ -43,7 +43,7 @@ public class TyreLabelGenerator {
     private static final String SNOW_CAPABLE_ID = "snowCapable";
     private static final String ICE_CAPABLE_ID = "iceCapable";
 
-    public void generate(TyreInformation tyreInformation) throws TyreLabelGeneratorException {
+    public static void generate(TyreInformation tyreInformation) throws TyreLabelGeneratorException {
         TyreInformationValidator.validate(tyreInformation);
 
         SVGDocument svgDocument = loadSvgDocument();
@@ -92,12 +92,12 @@ public class TyreLabelGenerator {
         }
     }
 
-    private SVGDocument loadSvgDocument() throws TyreLabelGeneratorException {
+    private static SVGDocument loadSvgDocument() throws TyreLabelGeneratorException {
         try {
             String parser = XMLResourceDescriptor.getXMLParserClassName();
             SAXSVGDocumentFactory svgDocumentFactory = new SAXSVGDocumentFactory(parser);
 
-            URL resourceUrl = this.getClass().getResource(TEMPLATE_PATH);
+            URL resourceUrl = TyreLabelGenerator.class.getResource(TEMPLATE_PATH);
             if (resourceUrl == null) {
                 throw new IOException(String.format("Resource '%s' not found.", TEMPLATE_PATH));
             }
@@ -113,7 +113,7 @@ public class TyreLabelGenerator {
         }
     }
 
-    private String generateQrCodeSvgString(String url) {
+    private static String generateQrCodeSvgString(String url) {
         QrCode qrCode = QrCode.encodeText(url, QrCode.Ecc.MEDIUM);
         String qrCodeSvg = qrCode.toSvgString(0);
 

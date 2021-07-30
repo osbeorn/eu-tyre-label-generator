@@ -22,6 +22,6 @@ public class Main {
                 .setIceCapable(true)
                 .build();
 
-        new TyreLabelGenerator().generate(tyreInformation);
+        TyreLabelGenerator.generate(tyreInformation);
     }
 }
