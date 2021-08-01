@@ -49,10 +49,14 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
+      - name: Restore GPG keys
+        env:
+          GPG_KEY: ${{ secrets.OSSRH_GPG_KEY }}
+          GPG_PUB: ${{ secrets.OSSRH_GPG_PUB }}
+        run: 'printf "$GPG_KEY" | base64 --decode > "$GITHUB_WORKSPACE/gpg.key" && printf "$GPG_PUB" | base64 --decode > "$GITHUB_WORKSPACE/gpg.pub" && gpg --batch --import "$GITHUB_WORKSPACE/gpg.pub" "$GITHUB_WORKSPACE/gpg.key"'
       - name: Publish to OSSRH
-        uses: samuelmeuli/action-maven-publish@v1
-        with:
-          gpg_private_key: ${{ secrets.OSSRH_GPG_KEY }}
-          gpg_passphrase: ${{ secrets.OSSRH_GPG_PASSPHRASE }}
-          nexus_username: ${{ secrets.OSSRH_USERNAME }}
-          nexus_password: ${{ secrets.OSSRH_PASSWORD }}
+        env:
+          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+          GPG_PASSPHRASE: ${{ secrets.OSSRH_GPG_PASSPHRASE }}
+        run: mvn --batch-mode source:jar javadoc:jar deploy -Pdeploy -DskipTests=true --settings ./settings.xml;
