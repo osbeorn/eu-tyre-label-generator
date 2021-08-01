@@ -49,11 +49,6 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
-      - name: Restore GPG keys
-        env:
-          GPG_KEY: ${{ secrets.OSSRH_GPG_KEY }}
-          GPG_PUB: ${{ secrets.OSSRH_GPG_PUB }}
-        run: 'printf "$GPG_KEY" | base64 --decode > "$GITHUB_WORKSPACE/gpg.key" && printf "$GPG_PUB" | base64 --decode > "$GITHUB_WORKSPACE/gpg.pub" && gpg --batch --import "$GITHUB_WORKSPACE/gpg.pub" "$GITHUB_WORKSPACE/gpg.key"'
       - name: Publish to OSSRH
         uses: samuelmeuli/action-maven-publish@v1
         with:
