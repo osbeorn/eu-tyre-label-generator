@@ -15,7 +15,7 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <gpg.keyname>${env.OSSRH_GPG_KEY}</gpg.keyname>
+                <gpg.keyname>447AA35C6FC2D716</gpg.keyname>
                 <gpg.passphrase>${env.GPG_PASSPHRASE}</gpg.passphrase>
             </properties>
         </profile>
