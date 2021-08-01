@@ -10,7 +10,7 @@
 
     <name>EU tyre label generator</name>
     <description>
-        A library that geenrates a tyre label image that meeets the EU/2020/740 regulation of the European Parliament
+        A library that generates a tyre label image that meets the EU/2020/740 regulation of the European Parliament
         and of the Council of 25 May 2020
     </description>
     <url>https://github.com/osbeorn/eu-tyre-label-generator</url>
