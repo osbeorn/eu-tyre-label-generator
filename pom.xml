@@ -8,6 +8,34 @@
     <artifactId>eu-tyre-label-generator</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
+    <name>EU tyre label generator</name>
+    <description>
+        A library that geenrates a tyre label image that meeets the EU/2020/740 regulation of the European Parliament
+        and of the Council of 25 May 2020
+    </description>
+    <url>https://github.com/osbeorn/eu-tyre-label-generator</url>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>osbeorn</id>
+            <name>Benjamin Kastelic</name>
+            <email>kastelic.benjamin@gmail.com</email>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/osbeorn/eu-tyre-label-generator.git</connection>
+        <developerConnection>scm:git:ssh://github.com:osbeorn/eu-tyre-label-generator.git</developerConnection>
+        <url>http://github.com/osbeorn/eu-tyre-label-generator.git</url>
+    </scm>
+
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
@@ -16,7 +44,17 @@
 
         <batik.version>1.14</batik.version>
         <qrcodegen.version>1.6.0</qrcodegen.version>
+
+        <nexus.staging.maven.plugin.version>1.6.7</nexus.staging.maven.plugin.version>
+        <maven.gpg.plugin>1.5</maven.gpg.plugin>
     </properties>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
 
     <dependencies>
         <!-- Apache Batik -->
@@ -64,6 +102,31 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>${nexus.staging.maven.plugin.version}</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>${maven.gpg.plugin}</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.22.2</version>
