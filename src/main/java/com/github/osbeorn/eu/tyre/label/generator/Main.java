@@ -31,8 +31,7 @@ public class Main {
                     .build();
 
             TyreLabel tyreLabel = TyreLabelGenerator.generate(tyreInformation);
-//            tyreLabel.toPNGFile("eu-tyre-label-2020.png");
-            tyreLabel.toSVGFile("eu-tyre-label-2020.svg");
+            tyreLabel.toPNGFile("eu-tyre-label-2020.png");
 
             long end = System.currentTimeMillis();
             long diff = end - start;
