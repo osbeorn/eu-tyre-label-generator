@@ -5,15 +5,10 @@ import com.github.osbeorn.eu.tyre.label.generator.models.TyreInformation;
 import com.github.osbeorn.eu.tyre.label.generator.utils.TyreInformationValidator;
 import io.nayuki.qrcodegen.QrCode;
 import org.apache.batik.anim.dom.SAXSVGDocumentFactory;
-import org.apache.batik.transcoder.TranscoderInput;
-import org.apache.batik.transcoder.TranscoderOutput;
-import org.apache.batik.transcoder.image.PNGTranscoder;
 import org.apache.batik.util.XMLResourceDescriptor;
 import org.w3c.dom.svg.SVGDocument;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,7 +38,20 @@ public class TyreLabelGenerator {
     private static final String SNOW_CAPABLE_ID = "snowCapable";
     private static final String ICE_CAPABLE_ID = "iceCapable";
 
-    public static void generate(TyreInformation tyreInformation) throws TyreLabelGeneratorException {
+//    static {
+//        try {
+//            // load and set fonts
+//            GraphicsEnvironment graphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
+//
+//            graphicsEnvironment.registerFont(Font.createFont(Font.TRUETYPE_FONT, TyreLabelGenerator.class.getResourceAsStream("/fonts/calibrib.ttf")));
+//            graphicsEnvironment.registerFont(Font.createFont(Font.TRUETYPE_FONT, TyreLabelGenerator.class.getResourceAsStream("/fonts/verdana.ttf")));
+//            graphicsEnvironment.registerFont(Font.createFont(Font.TRUETYPE_FONT, TyreLabelGenerator.class.getResourceAsStream("/fonts/verdanab.ttf")));
+//        } catch (FontFormatException | IOException e) {
+//            LOG.log(Level.SEVERE, "Unable to load and set fonts.", e);
+//        }
+//    }
+
+    public static TyreLabel generate(TyreInformation tyreInformation) throws TyreLabelGeneratorException {
         TyreInformationValidator.validate(tyreInformation);
 
         SVGDocument svgDocument = loadSvgDocument();
@@ -76,20 +84,11 @@ public class TyreLabelGenerator {
             if (tyreInformation.isIceCapable()) {
                 SvgDocumentTransformer.showElement(svgDocument, ICE_CAPABLE_ID);
             }
-
-            TranscoderInput transcoderInput = new TranscoderInput(svgDocument);
-
-            OutputStream outputStream = new FileOutputStream("eu-tyre-label-2020.png");
-            TranscoderOutput transcoderOutput = new TranscoderOutput(outputStream);
-            PNGTranscoder pngTranscoder = new PNGTranscoder();
-
-            pngTranscoder.transcode(transcoderInput, transcoderOutput);
-
-            outputStream.flush();
-            outputStream.close();
         } catch (Exception e) {
             int i = 0;
         }
+
+        return new TyreLabel(svgDocument);
     }
 
     private static SVGDocument loadSvgDocument() throws TyreLabelGeneratorException {
@@ -102,9 +101,7 @@ public class TyreLabelGenerator {
                 throw new IOException(String.format("Resource '%s' not found.", TEMPLATE_PATH));
             }
 
-            SVGDocument svgDocument = svgDocumentFactory.createSVGDocument(resourceUrl.toString());
-
-            return svgDocument;
+            return svgDocumentFactory.createSVGDocument(resourceUrl.toString());
         } catch (IOException e) {
             String message = String.format("Unable to construct SVGDocument instance: %s", e.getMessage());
             LOG.log(Level.SEVERE, message, e);
