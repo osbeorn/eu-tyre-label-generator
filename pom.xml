@@ -6,7 +6,7 @@
 
     <groupId>io.github.osbeorn</groupId>
     <artifactId>eu-tyre-label-generator</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <name>EU tyre label generator</name>
     <description>
