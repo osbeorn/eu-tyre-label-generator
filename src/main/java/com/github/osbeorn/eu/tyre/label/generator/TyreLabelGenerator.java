@@ -8,8 +8,10 @@ import org.apache.batik.anim.dom.SAXSVGDocumentFactory;
 import org.apache.batik.util.XMLResourceDescriptor;
 import org.w3c.dom.svg.SVGDocument;
 
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -38,18 +40,18 @@ public class TyreLabelGenerator {
     private static final String SNOW_CAPABLE_ID = "snowCapable";
     private static final String ICE_CAPABLE_ID = "iceCapable";
 
-//    static {
-//        try {
-//            // load and set fonts
-//            GraphicsEnvironment graphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
-//
-//            graphicsEnvironment.registerFont(Font.createFont(Font.TRUETYPE_FONT, TyreLabelGenerator.class.getResourceAsStream("/fonts/calibrib.ttf")));
-//            graphicsEnvironment.registerFont(Font.createFont(Font.TRUETYPE_FONT, TyreLabelGenerator.class.getResourceAsStream("/fonts/verdana.ttf")));
-//            graphicsEnvironment.registerFont(Font.createFont(Font.TRUETYPE_FONT, TyreLabelGenerator.class.getResourceAsStream("/fonts/verdanab.ttf")));
-//        } catch (FontFormatException | IOException e) {
-//            LOG.log(Level.SEVERE, "Unable to load and set fonts.", e);
-//        }
-//    }
+    static {
+        try {
+            // load and set fonts
+            GraphicsEnvironment graphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
+
+            graphicsEnvironment.registerFont(Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(TyreLabelGenerator.class.getResourceAsStream("/fonts/calibrib.ttf"))));
+            graphicsEnvironment.registerFont(Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(TyreLabelGenerator.class.getResourceAsStream("/fonts/verdana.ttf"))));
+            graphicsEnvironment.registerFont(Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(TyreLabelGenerator.class.getResourceAsStream("/fonts/verdanab.ttf"))));
+        } catch (FontFormatException | IOException e) {
+            LOG.log(Level.SEVERE, "Unable to load and set fonts.", e);
+        }
+    }
 
     public static TyreLabel generate(TyreInformation tyreInformation) throws TyreLabelGeneratorException {
         TyreInformationValidator.validate(tyreInformation);
