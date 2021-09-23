@@ -9,7 +9,7 @@ import com.github.osbeorn.eu.tyre.label.generator.models.TyreInformation;
  */
 public class TyreInformationValidator {
 
-    public static void validate(TyreInformation tyreInformation) {
+    public static void validate(TyreInformation tyreInformation) throws InvalidTyreInformationException {
         if (tyreInformation.getUrl() == null || tyreInformation.getUrl().isEmpty()) {
             throw new InvalidTyreInformationException("url");
         }
@@ -19,7 +19,7 @@ public class TyreInformationValidator {
         }
 
         if (tyreInformation.getIdentificationNumber() == null || tyreInformation.getIdentificationNumber().isEmpty()) {
-            throw new InvalidTyreInformationException("type");
+            throw new InvalidTyreInformationException("identificationNumber");
         }
 
         if (tyreInformation.getDimensions() == null || tyreInformation.getDimensions().isEmpty()) {

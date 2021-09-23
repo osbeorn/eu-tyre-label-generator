@@ -41,7 +41,7 @@ public class TyreInformationValidatorTest {
     }
 
     @Test
-    public void validateMissingType() {
+    public void validateMissingIdentificationNumber() {
         TyreInformation tyreInformation = new TyreInformationBuilder()
                 .setUrl("http://example.org/tyres/123456")
                 .setSupplier("Continental")
@@ -52,7 +52,7 @@ public class TyreInformationValidatorTest {
                 () -> TyreInformationValidator.validate(tyreInformation)
         );
 
-        assertEquals("type", exception.getField());
+        assertEquals("identificationNumber", exception.getField());
     }
 
     @Test
@@ -60,7 +60,7 @@ public class TyreInformationValidatorTest {
         TyreInformation tyreInformation = new TyreInformationBuilder()
                 .setUrl("http://example.org/tyres/123456")
                 .setSupplier("Continental")
-                .setIdentificationNumber("winter")
+                .setIdentificationNumber("784623")
                 .build();
 
         InvalidTyreInformationException exception = assertThrows(
@@ -76,7 +76,7 @@ public class TyreInformationValidatorTest {
         TyreInformation tyreInformation = new TyreInformationBuilder()
                 .setUrl("http://example.org/tyres/123456")
                 .setSupplier("Continental")
-                .setIdentificationNumber("winter")
+                .setIdentificationNumber("784623")
                 .setDimensions("205/65R15 95H")
                 .build();
 
@@ -93,7 +93,7 @@ public class TyreInformationValidatorTest {
         TyreInformation tyreInformation = new TyreInformationBuilder()
                 .setUrl("http://example.org/tyres/123456")
                 .setSupplier("Continental")
-                .setIdentificationNumber("winter")
+                .setIdentificationNumber("784623")
                 .setDimensions("205/65R15 95H")
                 .setClassification(TyreClassification.C1)
                 .build();
@@ -111,7 +111,7 @@ public class TyreInformationValidatorTest {
         TyreInformation tyreInformation = new TyreInformationBuilder()
                 .setUrl("http://example.org/tyres/123456")
                 .setSupplier("Continental")
-                .setIdentificationNumber("winter")
+                .setIdentificationNumber("784623")
                 .setDimensions("205/65R15 95H")
                 .setClassification(TyreClassification.C1)
                 .setFuelEfficiencyClass(TyreFuelEfficiencyClass.D)
@@ -130,7 +130,7 @@ public class TyreInformationValidatorTest {
         TyreInformation tyreInformation = new TyreInformationBuilder()
                 .setUrl("http://example.org/tyres/123456")
                 .setSupplier("Continental")
-                .setIdentificationNumber("winter")
+                .setIdentificationNumber("784623")
                 .setDimensions("205/65R15 95H")
                 .setClassification(TyreClassification.C1)
                 .setFuelEfficiencyClass(TyreFuelEfficiencyClass.D)
@@ -150,7 +150,7 @@ public class TyreInformationValidatorTest {
         TyreInformation tyreInformation = new TyreInformationBuilder()
                 .setUrl("http://example.org/tyres/123456")
                 .setSupplier("Continental")
-                .setIdentificationNumber("winter")
+                .setIdentificationNumber("784623")
                 .setDimensions("205/65R15 95H")
                 .setClassification(TyreClassification.C1)
                 .setFuelEfficiencyClass(TyreFuelEfficiencyClass.D)
